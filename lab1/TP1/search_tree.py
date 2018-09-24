@@ -53,7 +53,7 @@ def bfs(graph, places):
 
     def get_minimal_solution(sol_queue):
         min_solution = queue.get()
-        while sol_queue.not_empty:
+        while not sol_queue.empty():
             sol = queue.get()
             if sol.g < min_solution.g:
                 min_solution = sol
@@ -65,13 +65,13 @@ def bfs(graph, places):
 
     while True:
         solution = queue.get()
-        if len(solution.not_visited) == 0:
+        if len(solution.not_visited) == 1:
             queue.put(solution)
             break;
         for idx in solution.not_visited:
-            new_places = solution.not_visited
-            new_places.remove(idx)
-            queue.put(Solution(new_places, solution.graph))
+            new_solution = solution
+            new_solution.add(idx)
+            queue.put(new_solution)
 
 
 
@@ -79,9 +79,23 @@ def bfs(graph, places):
 
 # testing
 
-# test 1  --------------  OPT. SOL. = 27
+#test 1  --------------  OPT. SOL. = 27
 start_time = time.time()
-places=[0, 5, 13, 4]
+places=[0, 5, 13, 16, 6, 9, 4]
+sol = bfs(graph=graph_test, places=places)
+print(sol.g)
+print("--- %s seconds ---" % (time.time() - start_time))
+
+#test 2 -------------- OPT. SOL. = 30
+start_time = time.time()
+places=[0, 1, 4, 9, 20, 18, 16, 5, 13, 19]
+sol = bfs(graph=graph_test, places=places)
+print(sol.g)
+print("--- %s seconds ---" % (time.time() - start_time))
+
+#test 3 -------------- OPT. SOL. = 26
+start_time = time.time()
+places=[0, 2, 7, 13, 11, 16, 15, 7, 9, 8, 4]
 sol = bfs(graph=graph_test, places=places)
 print(sol.g)
 print("--- %s seconds ---" % (time.time() - start_time))
