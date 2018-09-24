@@ -43,34 +43,39 @@ sol = Solution(places_test, graph_test)
 sol.add(5)
 sol.add(13)
 sol.add(16)
-# using debbugger: the sol should have g = 20, not_visited: [16, 6, 9, 4], visited:[0, 5, 13]
+# using debugger: the sol should have g = 20, not_visited: [16, 6, 9, 4], visited:[0, 5, 13]
 
 
 def bfs(graph, places):
     """
     Returns the best solution which spans over all attractions indicated in 'places'
     """
-    def get_minimal_solution(solutions):
-        min_g = solutions[0].g
-        min_solution = solutions[0]
-        for solution in solutions[1:]:
-            if solution.g < min_g:
-                min_g = solution.g
-                min_solution = solution
+
+    def get_minimal_solution(sol_queue):
+        min_solution = queue.get()
+        while sol_queue.not_empty:
+            sol = queue.get()
+            if sol.g < min_solution.g:
+                min_solution = sol
         return min_solution
 
-    places_pool = places[1:-1]
-    queue = Queue()
-    solutions = []
-    current_solution = Solution(places, graph)
-    map(queue.put, places_pool)
 
-    while queue.not_empty:
-        new_sol = current_solution
-        new_sol.add(queue.get())
-        if len(new_sol.not_visited) == 0:
-            solutions.append(new_sol)
-    return get_minimal_solution(solutions)
+    queue = Queue()
+    queue.put(Solution(places, graph))
+
+    while True:
+        solution = queue.get()
+        if len(solution.not_visited) == 0:
+            queue.put(solution)
+            break;
+        for idx in solution.not_visited:
+            new_places = solution.not_visited
+            new_places.remove(idx)
+            queue.put(Solution(new_places, solution.graph))
+
+
+
+    return get_minimal_solution(queue)
 
 # testing
 
