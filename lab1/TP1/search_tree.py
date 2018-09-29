@@ -27,12 +27,6 @@ class Solution:
         """
         Adds the point in position idx of not_visited list to the solution
         """
-        # if (idx not in self.not_visited):
-        #     print("the index was not found in the not_visited list")
-        #     return None
-        # if (idx in self.visited):
-        #     print("the index is already in the visited list")
-        #     return None
         # add the cost
         self.g += self.graph[self.visited[-1], idx]
         # add the to the visited place and remove from the unvisited places
@@ -69,6 +63,7 @@ def bfs(graph, places):
     queue = Queue()
     queue.put(Solution(places, graph))
 
+    node_counter = 1
     while True:
         solution = queue.get()
         if len(solution.not_visited) == 1:
@@ -78,7 +73,9 @@ def bfs(graph, places):
             new_solution = copy.deepcopy(solution)
             new_solution.add(idx)
             queue.put(new_solution)
+            node_counter += 1
 
+    print("number of nodes explored: " + str(node_counter))
     return get_minimal_solution(queue)
 
 
