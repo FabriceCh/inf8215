@@ -1,3 +1,4 @@
+import copy
 import heapq
 import time
 
@@ -13,6 +14,29 @@ def fastest_path_estimation(sol):
     c = sol.visited[-1]
     pm = sol.not_visited[-1]
 
+    sols = []
+
+    for idx in sol.not_visited[:-1]:
+        new_solution = copy.deepcopy(sol)
+        new_solution.add(idx)
+        heapq.push(sols, (new_solution.g, new_solution))
+
+
+
+
+
+def A_star(graph, places):
+    """
+    Performs the A* algorithm
+    """
+
+    # blank solution
+    root = Solution(graph=graph, places=places)
+
+    # search tree T
+    T = []
+    heapq.heapify(T)
+    heapq.heappush(T, root)
 
 
 

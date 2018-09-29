@@ -10,6 +10,11 @@ def read_graph():
 
 graph_test = read_graph()
 
+def f(sol):
+    return sol.g + h(sol)
+
+def h(sol):
+    return 0
 
 class Solution:
     def __init__(self, places, graph):
@@ -22,6 +27,9 @@ class Solution:
         self.graph = graph
         self.visited = [places[0]]  # list of already visited attractions
         self.not_visited = copy.deepcopy(places[1:])  # list of attractions not yet visited
+
+    def __lt__(self, other):
+        return f(self) < f(other)
 
     def add(self, idx):
         """
