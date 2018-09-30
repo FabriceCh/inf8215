@@ -3,7 +3,7 @@ import copy
 import time
 from queue import Queue
 
-from TP1.a_star import fastest_path_estimation
+from TP1.images.fastest_path_estimation import fastest_path_estimation
 
 
 def read_graph():
