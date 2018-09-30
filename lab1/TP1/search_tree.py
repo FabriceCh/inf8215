@@ -3,18 +3,14 @@ import copy
 import time
 from queue import Queue
 
+from TP1.a_star import fastest_path_estimation
+
 
 def read_graph():
     return np.loadtxt("montreal", dtype='i', delimiter=',')
 
 
 graph_test = read_graph()
-
-def f(sol):
-    return sol.g + h(sol)
-
-def h(sol):
-    return 0
 
 class Solution:
     def __init__(self, places, graph):
@@ -28,8 +24,8 @@ class Solution:
         self.visited = [places[0]]  # list of already visited attractions
         self.not_visited = copy.deepcopy(places[1:])  # list of attractions not yet visited
 
-    # def __lt__(self, other):
-    #     return f(self) < f(other)
+    def __lt__(self, other):
+        return fastest_path_estimation(self) + self.g < fastest_path_estimation(other) + other.g
 
     def add(self, idx):
         """
