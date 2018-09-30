@@ -28,8 +28,8 @@ class Solution:
         self.visited = [places[0]]  # list of already visited attractions
         self.not_visited = copy.deepcopy(places[1:])  # list of attractions not yet visited
 
-    def __lt__(self, other):
-        return f(self) < f(other)
+    # def __lt__(self, other):
+    #     return f(self) < f(other)
 
     def add(self, idx):
         """
@@ -90,22 +90,22 @@ def bfs(graph, places):
 # testing
 
 # test 1  --------------  OPT. SOL. = 27
-start_time = time.time()
-places = [0, 5, 13, 16, 6, 9, 4]
-sol = bfs(graph=graph_test, places=places)
-print(sol.g)
-print("--- %s seconds ---" % (time.time() - start_time))
-
-# test 2 -------------- OPT. SOL. = 30
-start_time = time.time()
-places = [0, 1, 4, 9, 20, 18, 16, 5, 13, 19]
-sol = bfs(graph=graph_test, places=places)
-print(sol.g)
-print("--- %s seconds ---" % (time.time() - start_time))
-
-# test 3 -------------- OPT. SOL. = 26
-start_time = time.time()
-places = [0, 2, 7, 13, 11, 16, 15, 7, 9, 8, 4]
-sol = bfs(graph=graph_test, places=places)
-print(sol.g)
-print("--- %s seconds ---" % (time.time() - start_time))
+# start_time = time.time()
+# places = [0, 5, 13, 16, 6, 9, 4]
+# sol = bfs(graph=graph_test, places=places)
+# print(sol.g)
+# print("--- %s seconds ---" % (time.time() - start_time))
+#
+# # test 2 -------------- OPT. SOL. = 30
+# start_time = time.time()
+# places = [0, 1, 4, 9, 20, 18, 16, 5, 13, 19]
+# sol = bfs(graph=graph_test, places=places)
+# print(sol.g)
+# print("--- %s seconds ---" % (time.time() - start_time))
+#
+# # test 3 -------------- OPT. SOL. = 26
+# start_time = time.time()
+# places = [0, 2, 7, 13, 11, 16, 15, 7, 9, 8, 4]
+# sol = bfs(graph=graph_test, places=places)
+# print(sol.g)
+# print("--- %s seconds ---" % (time.time() - start_time))
