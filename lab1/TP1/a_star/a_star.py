@@ -1,11 +1,8 @@
-import copy
 import heapq
-import numpy as np
-import time
-from _heapq import heappush, heappop
 
-from TP1.images.fastest_path_estimation import fastest_path_estimation
-from TP1.search_tree import Solution, read_graph
+from lab1.TP1.a_star.fastest_path_estimation import fastest_path_estimation
+from lab1.TP1.read_graph import read_graph
+from lab1.TP1.a_star.solution import Solution
 
 places_test = [0, 5, 13, 16, 6, 9, 20]
 sol = Solution(places_test, read_graph())
@@ -26,6 +23,7 @@ def A_star(graph, places):
     """
     Performs the A* algorithm
     """
+    # TODO
 
     # blank solution
     root = Solution(graph=graph, places=places)

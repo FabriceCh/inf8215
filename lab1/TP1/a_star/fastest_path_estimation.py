@@ -1,12 +1,6 @@
 import copy
 from _heapq import heappush, heappop
 
-import numpy as np
-
-
-def read_graph():
-    return np.loadtxt("montreal", dtype='i', delimiter=',')
-
 
 def fastest_path_estimation(sol):
     """
