@@ -1,18 +1,26 @@
 import time
-
-from lab1.TP1.VNS.initial_sol import initial_sol
-from lab1.TP1.read_graph import read_graph
+from lab1.TP1.VNS.shaking import shaking
+from lab1.TP1.VNS.local_search_2opt import local_search_2opt
 
 
 def vns(sol, k_max, t_max):
     """
     Performs the VNS algorithm
     """
+    start_time = time.time()
 
+    while time.time() - start_time < t_max:
+        new_solution = shaking(sol, k_max)
+        local_search_2opt(new_solution)
+        if new_solution.g < sol.g:
+            sol = new_solution
 
-graph = read_graph()
+    return sol
 
-# # test 1  --------------  OPT. SOL. = 27
+# Testing
+
+# graph = read_graph()
+# test 1  --------------  OPT. SOL. = 27
 # places = [0, 5, 13, 16, 6, 9, 4]
 # sol = initial_sol(graph=graph, places=places)
 # start_time = time.time()

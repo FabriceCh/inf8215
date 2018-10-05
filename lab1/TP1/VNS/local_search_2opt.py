@@ -16,19 +16,19 @@ def local_search_2opt(sol):
                     sol = new_solution
                     improvement = True
 
-import numpy as np
-from lab1.TP1.VNS.initial_sol import initial_sol
+# import numpy as np
+# from lab1.TP1.VNS.initial_sol import initial_sol
 
-def read_graph():
-    return np.loadtxt("../montreal", dtype='i', delimiter=',')
+# def read_graph():
+#     return np.loadtxt("../montreal", dtype='i', delimiter=',')
 
 
-places_test = [0, 5, 13, 16, 9, 4]
-graph_test = read_graph()
+# places_test = [0, 5, 13, 16, 9, 4]
+# graph_test = read_graph()
 
-solution = initial_sol(graph_test, places_test)
-print(solution.g)
-local_search_2opt(solution)
+# solution = initial_sol(graph_test, places_test)
+# print(solution.g)
+# local_search_2opt(solution)
 
-print(solution.visited)
-print(solution.g)
+# print(solution.visited)
+# print(solution.g)
