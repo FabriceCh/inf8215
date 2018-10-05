@@ -28,11 +28,56 @@ class Solution:
         self.visited.append(idx)
         self.not_visited.remove(idx)
 
+    def swap(self, idx1, idx2):
+        # Remove the score linked to the two indexes
+        if idx1-idx2 == 1: #idx1 is just after idx2
+            self.g -= self.graph[self.visited[idx1], self.visited[idx1 + 1]]
+            self.g -= self.graph[self.visited[idx2 - 1], self.visited[idx2]]
+            self.g -= self.graph[self.visited[idx2], self.visited[idx2 + 1]]
+        elif idx2-idx1 == 1: #idx2 is just after idx1
+            self.g -= self.graph[self.visited[idx1 - 1], self.visited[idx1]]
+            self.g -= self.graph[self.visited[idx1], self.visited[idx1 + 1]]
+            self.g -= self.graph[self.visited[idx2], self.visited[idx2 + 1]]
+        else:
+            self.g -= self.graph[self.visited[idx1 - 1], self.visited[idx1]]
+            self.g -= self.graph[self.visited[idx1], self.visited[idx1 + 1]]
+            self.g -= self.graph[self.visited[idx2 - 1], self.visited[idx2]]
+            self.g -= self.graph[self.visited[idx2], self.visited[idx2 + 1]]
 
-# # testing the solution with the add function
+        # Swaps the elements at the two given indexes then the indexes
+        self.visited[idx1], self.visited[idx2] = self.visited[idx2], self.visited[idx1]
+        idx1, idx2 = idx1, idx2
+
+        # Add the score linked to the two indexes
+        if idx1-idx2 == 1: #idx2 is just after idx1
+            self.g += self.graph[self.visited[idx1], self.visited[idx1 + 1]]
+            self.g += self.graph[self.visited[idx2 - 1], self.visited[idx2]]
+            self.g += self.graph[self.visited[idx2], self.visited[idx2 + 1]]
+
+        elif idx2-idx1 == 1: #idx1 is just after idx2
+            self.g += self.graph[self.visited[idx1 - 1], self.visited[idx1]]
+            self.g += self.graph[self.visited[idx1], self.visited[idx1 + 1]]
+            self.g += self.graph[self.visited[idx2], self.visited[idx2 + 1]]
+        else:
+            self.g += self.graph[self.visited[idx1 - 1], self.visited[idx1]]
+            self.g += self.graph[self.visited[idx1], self.visited[idx1 + 1]]
+            self.g += self.graph[self.visited[idx2 - 1], self.visited[idx2]]
+            self.g += self.graph[self.visited[idx2], self.visited[idx2 + 1]]
+
+# import numpy as np
+
+# def read_graph():
+#     return np.loadtxt("../montreal", dtype='i', delimiter=',')
+
+# testing the solution with the add / swap function
 # graph_test = read_graph()
 # places_test = [0, 5, 13, 16, 6, 9, 4]
 # sol = Solution(places_test, graph_test)
 # sol.add(5)
 # sol.add(13)
 # sol.add(16)
+
+# sol.swap(1, 2)
+# should return a g score of 32
+# print(sol.visited)
+# print(sol.g)
