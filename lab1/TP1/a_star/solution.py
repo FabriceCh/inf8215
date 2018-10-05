@@ -30,11 +30,11 @@ class Solution:
 
     def swap(self, idx1, idx2):
         # Remove the score linked to the two indexes
-        if idx1-idx2 == 1: #idx1 is just after idx2
+        if idx1-idx2 == 1:  # idx1 is just after idx2
             self.g -= self.graph[self.visited[idx1], self.visited[idx1 + 1]]
             self.g -= self.graph[self.visited[idx2 - 1], self.visited[idx2]]
             self.g -= self.graph[self.visited[idx2], self.visited[idx2 + 1]]
-        elif idx2-idx1 == 1: #idx2 is just after idx1
+        elif idx2-idx1 == 1:  # idx2 is just after idx1
             self.g -= self.graph[self.visited[idx1 - 1], self.visited[idx1]]
             self.g -= self.graph[self.visited[idx1], self.visited[idx1 + 1]]
             self.g -= self.graph[self.visited[idx2], self.visited[idx2 + 1]]
@@ -46,15 +46,14 @@ class Solution:
 
         # Swaps the elements at the two given indexes then the indexes
         self.visited[idx1], self.visited[idx2] = self.visited[idx2], self.visited[idx1]
-        idx1, idx2 = idx1, idx2
 
         # Add the score linked to the two indexes
-        if idx1-idx2 == 1: #idx2 is just after idx1
+        if idx1-idx2 == 1:  # idx2 is just after idx1
             self.g += self.graph[self.visited[idx1], self.visited[idx1 + 1]]
             self.g += self.graph[self.visited[idx2 - 1], self.visited[idx2]]
             self.g += self.graph[self.visited[idx2], self.visited[idx2 + 1]]
 
-        elif idx2-idx1 == 1: #idx1 is just after idx2
+        elif idx2-idx1 == 1:  # idx1 is just after idx2
             self.g += self.graph[self.visited[idx1 - 1], self.visited[idx1]]
             self.g += self.graph[self.visited[idx1], self.visited[idx1 + 1]]
             self.g += self.graph[self.visited[idx2], self.visited[idx2 + 1]]
