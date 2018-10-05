@@ -1,49 +1,10 @@
-import numpy as np
 import copy
-import time
 from queue import Queue
 
-from TP1.images.fastest_path_estimation import fastest_path_estimation
-
-
-def read_graph():
-    return np.loadtxt("montreal", dtype='i', delimiter=',')
-
+from lab1.TP1.read_graph import read_graph
+from lab1.TP1.a_star.solution import Solution
 
 graph_test = read_graph()
-
-class Solution:
-    def __init__(self, places, graph):
-        """
-        places: a list containing the indices of attractions to visit
-        p1 = places[0]
-        pm = places[-1]
-        """
-        self.g = 0  # current cost
-        self.graph = graph
-        self.visited = [places[0]]  # list of already visited attractions
-        self.not_visited = copy.deepcopy(places[1:])  # list of attractions not yet visited
-
-    def __lt__(self, other):
-        return fastest_path_estimation(self) + self.g < fastest_path_estimation(other) + other.g
-
-    def add(self, idx):
-        """
-        Adds the point in position idx of not_visited list to the solution
-        """
-        # add the cost
-        self.g += self.graph[self.visited[-1], idx]
-        # add the to the visited place and remove from the unvisited places
-        self.visited.append(idx)
-        self.not_visited.remove(idx)
-
-
-# testing the solution with the add function
-places_test = [0, 5, 13, 16, 6, 9, 4]
-sol = Solution(places_test, graph_test)
-sol.add(5)
-sol.add(13)
-sol.add(16)
 
 
 # using debugger: the sol should have g = 20, not_visited: [16, 6, 9, 4], visited:[0, 5, 13]
@@ -81,7 +42,6 @@ def bfs(graph, places):
 
     print("number of nodes explored: " + str(node_counter))
     return get_minimal_solution(queue)
-
 
 # testing
 
