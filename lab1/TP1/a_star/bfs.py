@@ -1,4 +1,5 @@
 import copy
+import time
 from queue import Queue
 
 from lab1.TP1.read_graph import read_graph
@@ -30,6 +31,7 @@ def bfs(graph, places):
 
     node_counter = 1
     while True:
+        node_counter += 1
         solution = queue.get()
         if len(solution.not_visited) == 1:
             queue.put(solution)
@@ -38,7 +40,7 @@ def bfs(graph, places):
             new_solution = copy.deepcopy(solution)
             new_solution.add(idx)
             queue.put(new_solution)
-            node_counter += 1
+
 
     print("number of nodes explored: " + str(node_counter))
     return get_minimal_solution(queue)
@@ -46,18 +48,20 @@ def bfs(graph, places):
 # testing
 
 # test 1  --------------  OPT. SOL. = 27
-# start_time = time.time()
-# places = [0, 5, 13, 16, 6, 9, 4]
-# sol = bfs(graph=graph_test, places=places)
-# print(sol.g)
-# print("--- %s seconds ---" % (time.time() - start_time))
+start_time = time.time()
+places = [0, 5, 13, 16, 6, 9, 4]
+sol = bfs(graph=graph_test, places=places)
+print(sol.g)
+print(sol.visited)
+print("--- %s seconds ---" % (time.time() - start_time))
 #
 # # test 2 -------------- OPT. SOL. = 30
-# start_time = time.time()
-# places = [0, 1, 4, 9, 20, 18, 16, 5, 13, 19]
-# sol = bfs(graph=graph_test, places=places)
-# print(sol.g)
-# print("--- %s seconds ---" % (time.time() - start_time))
+start_time = time.time()
+places = [0, 1, 4, 9, 20, 18, 16, 5, 13, 19]
+sol = bfs(graph=graph_test, places=places)
+print(sol.g)
+print(sol.visited)
+print("--- %s seconds ---" % (time.time() - start_time))
 #
 # # test 3 -------------- OPT. SOL. = 26
 # start_time = time.time()
