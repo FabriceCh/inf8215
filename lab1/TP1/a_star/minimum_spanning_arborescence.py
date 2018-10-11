@@ -89,11 +89,11 @@ def minimum_spanning_arborescence(sol):
 
     edges = []
     for node in range(len(nodes)):
-        for other_node in range (node, len(nodes)):
+        for other_node in range(node, len(nodes)):
             if node == other_node:
                 continue
-            edges.append(Edge(nodes[node], nodes[other_node], graph[node, other_node]))
-            edges.append(Edge(nodes[other_node], nodes[node], graph[other_node, node]))
+            edges.append(Edge(nodes[node], nodes[other_node], graph[nodes[node], nodes[other_node]]))
+            edges.append(Edge(nodes[other_node], nodes[node], graph[nodes[other_node], nodes[node]]))
 
     return edmonds(edges, len(nodes), root)
 
@@ -103,7 +103,7 @@ from lab1.TP1.read_graph import read_graph
 from lab1.TP1.a_star.solution import Solution
 graph = read_graph()
 start_time = time.time()
-places=[0, 4]
+places=[0, 16]
 sol = Solution(places, graph)
 print(minimum_spanning_arborescence(sol))
 print("--- %s seconds ---" % (time.time() - start_time))
