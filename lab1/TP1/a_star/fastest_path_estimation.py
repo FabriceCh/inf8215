@@ -29,6 +29,11 @@ def fastest_path_estimation(sol):
         # custom function to add to heap queue sorted by the solution's cost
         heappush(h_queue, path)
 
+    if len(sol.not_visited) == 0:
+        return 0
+    elif len(sol.not_visited) == 1:
+        return sol.graph[sol.visited[-1], sol.not_visited[0]]
+
     c = sol.visited[-1]
     pm = sol.not_visited[-1]
     # the heap queue of solution sorted by their cost - change all to tuples with g for dijkstra
@@ -45,7 +50,7 @@ def fastest_path_estimation(sol):
         path = heappop(h_queue)
         # if it contains destination, stop and return that solution
         if pm in path.visited:
-            return path
+            return path.g
         # create a new solution for each neighbor of the current vertex and add it to heap queue
         for place in path.not_visited:
             new_path = copy.deepcopy(path)
