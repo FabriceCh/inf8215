@@ -18,15 +18,20 @@ def minimum_spanning_arborescence(sol):
 
         # Assign each vertex to a group (each group represent a vertex or a cycle)
         groups = {}
-        visited = []
+        visited = {}
         is_cycle_group = {}
-        count = 0;
+        count = 0
 
-        for x in range(len(edges)):
-            if visited[x]:
+        # Initiating dictionnaries
+        for edge in edges:
+            visited[edge.v] = False
+            groups[edge.v] = -1
+
+        for edge in edges:
+            if edge.v in visited and visited[edge.v]:
                 continue
 
-            node = x
+            node = edge.v
             path = []
 
             while node != -1 and not visited[node]:
@@ -46,6 +51,10 @@ def minimum_spanning_arborescence(sol):
             if is_cycle:
                 count += 1
 
+        # Initialising is_cycle_group
+        for x in range(count):
+            is_cycle_group[x] = False
+
         # Case where there are no cycle
         result = 0
         if count == len(edges):
@@ -53,7 +62,7 @@ def minimum_spanning_arborescence(sol):
                 result += edge.w
             return result
 
-        for edge in minimum_edges:
+        for key, edge in minimum_edges.items():
             if is_cycle_group[groups[edge.v]]:
                 result += edge.w
 
@@ -68,10 +77,10 @@ def minimum_spanning_arborescence(sol):
                 continue
 
             elif is_cycle_group[v]:
-                new_edges.append([Edge(u, v, edge.w - minimum_edges[edge.v].w)])
+                new_edges.append(Edge(u, v, edge.w - minimum_edges[edge.v].w))
 
             else:
-                new_edges.append([Edge(u, v, edge.w)])
+                new_edges.append(Edge(u, v, edge.w))
 
         return result + edmonds(new_edges, groups[root])
 
