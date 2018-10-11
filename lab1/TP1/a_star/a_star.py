@@ -38,7 +38,6 @@ def A_star(graph, places):
     heapq.heappush(T, root)
 
     n_nodes = 0
-    final_sol = None
 
     while True:
         n_nodes += 1
