@@ -8,7 +8,7 @@ def minimum_spanning_arborescence(sol):
     Edge = namedtuple('Edge', 'u v w')
     graph = read_graph()
 
-    def edmonds(edges, root):
+    def edmonds(edges, v, root):
         # determine min cost of edge entering each vertex
         minimum_edges = {}
         for edge in edges:
@@ -57,8 +57,8 @@ def minimum_spanning_arborescence(sol):
 
         # Case where there are no cycle
         result = 0
-        if count == len(edges):
-            for edge in minimum_edges:
+        if count == v:
+            for key, edge in minimum_edges.items():
                 result += edge.w
             return result
 
@@ -77,12 +77,12 @@ def minimum_spanning_arborescence(sol):
                 continue
 
             elif is_cycle_group[v]:
-                new_edges.append(Edge(u, v, edge.w - minimum_edges[edge.v].w))
+                new_edges.append(Edge(u, v, w - minimum_edges[edge.v].w))
 
             else:
-                new_edges.append(Edge(u, v, edge.w))
+                new_edges.append(Edge(u, v, w))
 
-        return result + edmonds(new_edges, groups[root])
+        return result + edmonds(new_edges, count, groups[root])
 
     root = sol.visited[0]
     nodes = sol.visited + sol.not_visited[0:-1]
@@ -95,7 +95,7 @@ def minimum_spanning_arborescence(sol):
             edges.append(Edge(nodes[node], nodes[other_node], graph[node, other_node]))
             edges.append(Edge(nodes[other_node], nodes[node], graph[other_node, node]))
 
-    return edmonds(edges, root)
+    return edmonds(edges, len(nodes), root)
 
 # test 1  --------------  OPT. SOL. = 27
 import time
