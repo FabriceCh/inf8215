@@ -1,6 +1,7 @@
 import copy
 
 from lab1.TP1.a_star.fastest_path_estimation import fastest_path_estimation
+from lab1.TP1.a_star.minimum_spanning_arborescence import minimum_spanning_arborescence
 
 
 class Solution:
@@ -16,7 +17,7 @@ class Solution:
         self.not_visited = copy.deepcopy(places[1:])  # list of attractions not yet visited
 
     def __lt__(self, other):
-        return fastest_path_estimation(self) + self.g < fastest_path_estimation(other) + other.g
+        return minimum_spanning_arborescence(self) + self.g < minimum_spanning_arborescence(other) + other.g
 
     def add(self, idx):
         """

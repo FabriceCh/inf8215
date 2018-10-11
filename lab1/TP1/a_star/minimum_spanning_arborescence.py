@@ -1,3 +1,4 @@
+import copy
 from collections import namedtuple
 from lab1.TP1.read_graph import read_graph
 
@@ -84,8 +85,9 @@ def minimum_spanning_arborescence(sol):
 
         return result + edmonds(new_edges, count, groups[root])
 
-    root = sol.visited[0]
-    nodes = sol.visited + sol.not_visited[0:]
+    root = sol.visited[-1]
+    nodes = copy.deepcopy(sol.not_visited)
+    nodes.append(root)
 
     edges = []
     for node in range(len(nodes)):
@@ -99,11 +101,11 @@ def minimum_spanning_arborescence(sol):
 
 # test 1  --------------  OPT. SOL. = 27
 import time
-from lab1.TP1.read_graph import read_graph
-from lab1.TP1.a_star.solution import Solution
-graph = read_graph()
-start_time = time.time()
-places=[0, 16]
-sol = Solution(places, graph)
-print(minimum_spanning_arborescence(sol))
-print("--- %s seconds ---" % (time.time() - start_time))
+# from lab1.TP1.read_graph import read_graph
+# from lab1.TP1.a_star.solution import Solution
+# graph = read_graph()
+# start_time = time.time()
+# places=[0]
+# sol = Solution(places, graph)
+# print(minimum_spanning_arborescence(sol))
+# print("--- %s seconds ---" % (time.time() - start_time))
