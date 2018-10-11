@@ -1,11 +1,12 @@
 from collections import namedtuple
-
+from lab1.TP1.read_graph import read_graph
 
 def minimum_spanning_arborescence(sol):
     """
     Returns the cost to reach the vertices in the unvisited list
     """
     Edge = namedtuple('Edge', 'u v w')
+    graph = read_graph()
 
     def edmonds(edges, root):
         # determine min cost of edge entering each vertex
@@ -75,7 +76,15 @@ def minimum_spanning_arborescence(sol):
         return result + edmonds(new_edges, groups[root])
 
     root = sol.visited[0]
-    edges = sol.visited + sol.not_visited[0:-1]
+    nodes = sol.visited + sol.not_visited[0:-1]
+
+    edges = []
+    for node in range(len(nodes)):
+        for other_node in range (node, len(nodes)):
+            if node == other_node:
+                continue
+            edges.append(Edge(nodes[node], nodes[other_node], graph[node, other_node]))
+            edges.append(Edge(nodes[other_node], nodes[node], graph[other_node, node]))
 
     return edmonds(edges, root)
 
