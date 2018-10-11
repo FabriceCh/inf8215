@@ -1,6 +1,5 @@
 import copy
 from collections import namedtuple
-from lab1.TP1.read_graph import read_graph
 
 def minimum_spanning_arborescence(sol):
     """
