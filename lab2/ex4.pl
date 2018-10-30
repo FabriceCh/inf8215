@@ -72,6 +72,11 @@ ask(army_general, X) :-
     read(Reponse),
     Reponse = 'oui'.
 
+ask(black, X) :-
+    format('~w is black? ', [X]),
+    read(Reponse),
+    Reponse = 'oui'.
+
 personne(X) :- ask(real, X), real(X).
 personne(X) :- ask(games, X), games(X).
 personne(X) :- true, m(X). %moses
@@ -98,8 +103,24 @@ american(X) :- rn(X). %Richard Nixon
 artist(X) :- ask(singer, X), mj(X). %micheal jackson
 artist(X) :- victor(X). %victor hugo
 
+stillAlive(X) :- ask(artist, X), arts(X).
+stillAlive(X) :- ask(politician, X), mg(X). %mikhail gorbachev
+stillAlive(X) :- ask(religion, X), pf(X). %pope francis
+stillAlive(X) :- fa(X). %fernando alonso
 
+arts(X) :- ask(actor, X), actor(X).
+arts(X) :- ask(boy, X), artBoy(X).
+arts(X) :- ask(singer, X), lg(X). %lady gaga
+arts(X) :- jk(X). %jk rowling
 
+actor(X) :- ask(boy, X), actBoy(X).
+actor(X) :- jl(X). %jennifer lawrence
+
+actBoy(X) :- ask(black, X), dw(X). %denzel washington
+actBoy(X) :- qt(X). % tarantino
+
+artBoy(X) :- ask(games, X), hk(X). % hideo kojima
+artBoy(X) :- b(X). % banksy
 
 
 %reals (18)
