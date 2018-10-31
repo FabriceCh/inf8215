@@ -12,71 +12,76 @@ Principe:
         -La réponse est la seule entité qui reste dans B
 */
 
+
+
+
+%questions
 ask(real, X) :-
-    format('~w is a real person? ', [X]),
+    format('~w is a real person? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(stillAlive, X) :-
-    format('~w is still alive? ', [X]),
+    format('~w is still alive? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(politician, X) :- 
-    format('~w is a politician? ', [X]),
+    format('~w is a politician? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(religion, X) :- 
-    format('~w is related to religion? ', [X]),
+    format('~w is related to religion? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(boy, X) :- 
-    format('~w is a man? ', [X]),
+    format('~w is a man? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(artist, X) :- 
-    format('~w is an artist? ', [X]),
+    format('~w is an artist? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(games, X) :- 
-    format('~w is linked to video games? ', [X]),
+    format('~w is linked to video games? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(actor, X) :- 
-    format('~w is an actor? ', [X]),
+    format('~w is an actor? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(singer, X) :- 
-    format('~w is a singer? ', [X]),
+    format('~w is a singer? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(plumber, X) :-
-    format('~w is a plumber? ', [X]),
+    format('~w is a plumber? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(american, X) :-
-    format('~w is american? ', [X]),
+    format('~w is american? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(army_general, X) :-
-    format('~w is an army general? ', [X]),
+    format('~w is an army general? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
 ask(black, X) :-
-    format('~w is black? ', [X]),
+    format('~w is black? (yes./no.)', [X]),
     read(Reponse),
-    Reponse = 'oui'.
+    Reponse = 'yes'.
 
+%tree
 personne(X) :- ask(real, X), real(X).
 personne(X) :- ask(games, X), games(X).
 personne(X) :- true, m(X). %moses
@@ -109,117 +114,114 @@ stillAlive(X) :- ask(religion, X), pf(X). %pope francis
 stillAlive(X) :- fa(X). %fernando alonso
 
 arts(X) :- ask(actor, X), actor(X).
-arts(X) :- ask(boy, X), artBoy(X).
+arts(X) :- ask(boy, X), artist_boy(X).
 arts(X) :- ask(singer, X), lg(X). %lady gaga
 arts(X) :- jk(X). %jk rowling
 
-actor(X) :- ask(boy, X), actBoy(X).
+actor(X) :- ask(boy, X), actor_boy(X).
 actor(X) :- jl(X). %jennifer lawrence
 
-actBoy(X) :- ask(black, X), dw(X). %denzel washington
-actBoy(X) :- qt(X). % tarantino
+actor_boy(X) :- ask(black, X), dw(X). %denzel washington
+actor_boy(X) :- qt(X). % tarantino
 
-artBoy(X) :- ask(games, X), hk(X). % hideo kojima
-artBoy(X) :- b(X). % banksy
-
+artist_boy(X) :- ask(games, X), hk(X). % hideo kojima
+artist_boy(X) :- b(X). % banksy
 
 %reals (18)
-%real(michael_jackson).
-%real(mikhail_gorbachev).
-%real(jennifer_lawrence).
-%real(hideo_kojima).
-%real(banksy).
-%
-%real(jk_rowling).
-%real(lady_gaga).
-%real(quentin_tarantino).
-%real(joseph_staline).
-%real(dwight_d_eisenhower).
-%
-%real(cleopatre).
-%real(victor_hugo).
-%real(jesus).
-%real(ayrton_senna).
-%real(fernando_alonso).
-%
-%real(pope_francis).
-%real(denzel_washington).
-%real(richard_nixon).
+real(michael_jackson).
+real(mikhail_gorbachev).
+real(jennifer_lawrence).
+real(hideo_kojima).
+real(banksy).
+
+real(jk_rowling).
+real(lady_gaga).
+real(quentin_tarantino).
+real(joseph_staline).
+real(dwight_d_eisenhower).
+
+real(cleopatre).
+real(victor_hugo).
+real(jesus).
+real(ayrton_senna).
+real(fernando_alonso).
+
+real(pope_francis).
+real(denzel_washington).
+real(richard_nixon).
 
 %still alive (10)
-%stillAlive(mikhail_gorbachev).
-%stillAlive(jennifer_lawrence).
-%stillAlive(hideo_kojima).
-%stillAlive(banksy).
-%stillAlive(jk_rowling).
-%
-%stillAlive(lady_gaga).
-%stillAlive(quentin_tarantino).
-%stillAlive(fernando_alonso).
-%stillAlive(pope_francis).
-%stillAlive(denzel_washington).
+stillAlive(mikhail_gorbachev).
+stillAlive(jennifer_lawrence).
+stillAlive(hideo_kojima).
+stillAlive(banksy).
+stillAlive(jk_rowling).
+
+stillAlive(lady_gaga).
+stillAlive(quentin_tarantino).
+stillAlive(fernando_alonso).
+stillAlive(pope_francis).
+stillAlive(denzel_washington).
 
 %politicians (5)
-%politician(mikhail_gorbachev).
-%politician(joseph_staline).
-%politician(dwight_d_eisenhower).
-%politician(cleopatre).
-%politician(richard_nixon).
+politician(mikhail_gorbachev).
+politician(joseph_staline).
+politician(dwight_d_eisenhower).
+politician(cleopatre).
+politician(richard_nixon).
 
 %linked to religion (3)
-%religion(jesus).
-%religion(moses).
-%religion(pope_francis).
+religion(jesus).
+religion(moses).
+religion(pope_francis).
 
-%boiiis (17)
-%boy(michael_jackson).
-%boy(mikhail_gorbachev).
-%boy(hideo_kojima).
-%boy(banksy).
-%boy(mario).
-%
-%boy(quentin_tarantino).
-%boy(joseph_staline).
-%boy(dwight_d_eisenhower).
-%boy(victor_hugo).
-%boy(jesus).
-%
-%boy(ayrton_senna).
-%boy(moses).
-%boy(fernando_alonso).
-%boy(pope_francis).
-%boy(james_bond).
-%
-%boy(denzel_washington).
-%boy(richard_nixon).
+%boys (17)
+boy(michael_jackson).
+boy(mikhail_gorbachev).
+boy(hideo_kojima).
+boy(banksy).
+boy(mario).
+
+boy(quentin_tarantino).
+boy(joseph_staline).
+boy(dwight_d_eisenhower).
+boy(victor_hugo).
+boy(jesus).
+
+boy(ayrton_senna).
+boy(moses).
+boy(fernando_alonso).
+boy(pope_francis).
+boy(james_bond).
+
+boy(denzel_washington).
+boy(richard_nixon).
 
 %artists (8)
-%artist(michael_jackson).
-%artist(jennifer_lawrence).
-%artist(banksy).
-%artist(jk_rowling).
-%artist(lady_gaga).
-%
-%artist(quentin_tarantino).
-%artist(victor_hugo).
-%artist(denzel_washington).
+artist(michael_jackson).
+artist(jennifer_lawrence).
+artist(banksy).
+artist(jk_rowling).
+artist(lady_gaga).
 
-
+artist(quentin_tarantino).
+artist(victor_hugo).
+artist(denzel_washington).
 
 %related to video games (4)
-%games(hideo_kojima).
-%games(lara_croft).
-%games(mario).
-%games(james_bond).
-%
-%%actor (3)
-%actor(jennifer_lawrence).
-%actor(quentin_tarantino).
-%actor(denzel_washington).
-%
-%%singer (2)
-%singer(michael_jackson).
-%singer(lady_gaga).
+games(hideo_kojima).
+games(lara_croft).
+games(mario).
+games(james_bond).
+
+%actor (3)
+actor(jennifer_lawrence).
+actor(quentin_tarantino).
+actor(denzel_washington).
+
+%singer (2)
+singer(michael_jackson).
+singer(lady_gaga).
 
 
 mj(michael_jackson).
@@ -244,3 +246,7 @@ pf(pope_francis).
 jb(james_bond).
 dw(denzel_washington).
 rn(richard_nixon).
+
+
+
+
