@@ -1,36 +1,18 @@
-% List of all the courses
-course('INF1005C').
-course('INF1500').
-course('INF1010').
-course('LOG1000').
-course('INF1600').
-course('INF2010').
-course('LOG2810').
-course('LOG2410').
-course('INF2705').
-course('MTH1007').
-course('LOG2990').
-course('INF2205').
-course('INF1900').
-
 % List of prerequirements for all the courses
-requires('INF1010', 'INF1005C').	% INF1010 requires INF1005C
-requires('LOG1000', 'INF1005C').
-requires('INF1600', 'INF1005C').
-requires('INF1600', 'INF1500').
-requires('INF2010', 'INF1010').
-requires('INF2010', 'INF2810').
-requires('LOG2410', 'INF1010').
-requires('LOG2410', 'LOG1000').
-requires('INF2705', 'INF2010').
-requires('INF2705', 'MTH1007').
-requires('INF2705', 'LOG2990').
-requires('INF1900', 'INF1600').
-requires('INF1900', 'LOG1000').
-requires('INF1900', 'INF2205').
+requires(inf1010, inf1005C).	% INF1010 requires INF1005C
+requires(log1000, inf1005C).
+requires(inf1600, inf1005C).
+requires(inf1600, inf1500).
+requires(inf2010, inf1010).
+requires(inf2010, inf2810).
+requires(log2410, inf1010).
+requires(log2410, log1000).
+requires(inf2705, inf2010).
+requires(inf2705, mth1007).
+requires(inf2705, log2990).
+requires(inf1900, inf1600).
+requires(inf1900, log1000).
+requires(inf1900, inf2205).
 
-% Rule to get all the direct requirements for a course
-directRequirements(Course) :- requires(Course, C), print(C).
-
-% Rule to return all requirements for a course
-% completeRequirementsFor(Course) :- requires(directRequirements(Course), C).
+% Rule to get all the requirements for a course with duplicates
+completeRequirements(X, Y) :- requires(X, Y); (requires(X, Z), completeRequirements(Z, Y)).
