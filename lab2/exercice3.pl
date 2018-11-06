@@ -17,3 +17,7 @@ corequires(inf2705, log2990).
 
 % Rule to get all the requirements for a course with duplicates
 completeRequirements(X, Y) :- requires(X, Y); (requires(X, Z), completeRequirements(Z, Y)).
+
+courseCorequires(X, Y) :- corequires(X, Y); corequires(Y, X).
+
+courseRequires(X, Y) :- requires(X, Y); corequires(X, Y); corequires(Y, X).
