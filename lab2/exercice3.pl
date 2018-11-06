@@ -15,9 +15,12 @@ prerequires(inf2705, inf2010).
 prerequires(inf2705, mth1007).
 
 corequires(log1000, inf1900).
+corequires(inf1600, log1000).
 corequires(inf1600, inf1900).
+corequires(inf1600, inf2205).
 corequires(inf2010, inf2810).
 corequires(inf2205, inf1900).
+corequires(inf2205, log1000).
 corequires(inf2705, log2990).
 
 requirements(X, Y) :- coursePreRequires(X, Y);
