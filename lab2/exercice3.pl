@@ -1,4 +1,9 @@
 % List of prerequirements for all the courses
+coursBase(inf1005c).
+coursBase(inf1500).
+coursBase(mth1007).
+coursBase(inf2205).
+
 prerequires(inf1010, inf1005C).	% INF1010 requires INF1005C
 prerequires(log1000, inf1005C).
 prerequires(inf1600, inf1005C).
@@ -15,8 +20,8 @@ corequires(inf2010, inf2810).
 corequires(inf2205, inf1900).
 corequires(inf2705, log2990).
 
-requirements(X, Y) :- coursePreRequires(X, Y); (coursePreRequires(X, Z), coursePreRequires(Z, Y));
-					  (coursePreRequires(X, Z), coursePreRequires(Z, ZZ), coursePreRequires(ZZ, Y)),
+requirements(X, Y) :- coursePreRequires(X, Y);
+					  (coursePreRequires(X, Z), not(corequires(X, Z)), not(coursBase(Z)), requirements(Z, Y)),
 					  X\==Y.
 
 courseCoRequires(X, Y) :- corequires(X, Y); corequires(Y, X).
