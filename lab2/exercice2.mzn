@@ -10,7 +10,8 @@ int: nbTeams;
 array[1..nbTeams, 1..nbTeams] of int: pv;
 
 % Valeur possibles
-set of int: Games = 1..nbTeams;
+set of int: Games = 1..nbTeams-1;
+set of int: Teams = 1..nbTeams;
 
 % On cree un array pour montrer chaque equipe joue contre qui
 % En i,j, on trouve l'equipe contre laquelle l'equipe i joue au jeme match
@@ -20,22 +21,30 @@ int: j;
 
 constraint
   % Chaque equipe joue contre chaque autre 1 seule fois
-  forall(i in 1..nbTeams)(
-      alldifferent(matchs[i][j] | j in nb nbTeams-1);
-  );
+  forall(i in Teams)(
+      alldifferent([matchs[i][j] | j in Games])
+  ) /\
   
   % Une equipe ne joue pas 2 matchs en meme temps
-  forAll(j in 1..nbTeams-1)(
-    alldifferent(matchs[i][j] | i in nbTeams);
-  );
+  forall(j in Games)(
+    alldifferent([matchs[i][j] | i in Teams])
+  ) /\
   
-  % Quand une equipe joue contre une autre, l'autre joue contre aussi
+  % Quand une equipe joue contre une autre, l'autre joue contre elle
+  forall(i in Teams)(
+      forall(j in Games)(
+        matchs[i][j] == matchs[j][i]
+      )
+  ) /\
   
   % Une equipe ne joue pas contre elle-meme
-  forall(i
+  forall(i in nbTeams)(
+      ([matchs[i][j] != i | j in nbTeams-1])
+  );
   
   % Une equipe ne joue pas 4x de suite a l'etranger ou 4x de suite a domicile
   
   % On veut une reponse qui satisfait les contraintes
   solve satisfy;
   
+  output pv;
