@@ -40,7 +40,7 @@ int: Physician = 2;
 int: Violonist = 3;
 int: Acrobat = 4;
 
-set of int: Houses = 1..5;
+set of int: Houses = 0..4;
 
 array[Nationalities] of var Houses: nation;
 array[Colors] of var Houses: color;
@@ -57,11 +57,11 @@ predicate rightof(var Houses:h1, var Houses:h2) =
 predicate leftof(var Houses:h1, var Houses:h2) =
        h1 == h2 - 1;
 
-predicate middle(var Houses:h) = h == 3;
+predicate middle(var Houses:h) = h == 2;
 
-predicate left(var Houses:h) = h = 1;
+predicate left(var Houses:h) = h = 0;
 
-predicate right(var Houses:h) = h = 5;
+predicate right(var Houses:h) = h = 4;
 
 constraint
 	alldifferent(nation) /\
@@ -72,17 +72,17 @@ constraint
 	nation[English] == color[Red] /\
 	nation[Spanish] == animal[Dog] /\
 	color[Green] == drink[Coffee] /\
-         nation[Ukrainian] == drink[Tea] /\
-         color[Green] `rightof` color[White] /\
-         job[Sculptor] == animal[Snails] /\
-         job[Diplomat] == color[Yellow] /\
-         middle(drink[Milk]) /\
-         left(nation[Norwegian]) /\
-         job[Physician] `nextto` animal[Fox] /\
-         job[Diplomat] `nextto` animal[Horse] /\
-         job[Violonist] == drink[OrangeJuice] /\
-         nation[Japanese] == job[Acrobat] /\
-         nation[Norwegian] `nextto` color[Blue];
+  nation[Ukrainian] == drink[Tea] /\
+  color[Green] `rightof` color[White] /\
+  job[Sculptor] == animal[Snails] /\
+  job[Diplomat] == color[Yellow] /\
+  middle(drink[Milk]) /\
+  left(nation[Norwegian]) /\
+  job[Physician] `nextto` animal[Fox] /\
+  job[Diplomat] `nextto` animal[Horse] /\
+  job[Violonist] == drink[OrangeJuice] /\
+  nation[Japanese] == job[Acrobat] /\
+  nation[Norwegian] `nextto` color[Blue];
 
 solve satisfy;
 
