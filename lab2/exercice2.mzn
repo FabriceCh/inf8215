@@ -62,7 +62,10 @@ constraint % Chaque equipe joue contre chaque autre 1 seule fois
     (
       sum([pv[i,matchs[i,j+k]]  | k in 0..3]) > 0 /\ sum([pv[i,matchs[i,j+k]]  | k in 0..3]) < 4
     )
-  );
+  ) /\
+  
+  %Briser la symétrie: on force un ordre en particulier
+  matchs[3,1] > matchs[3,nbTeams-1];
   
 % On veut une reponse qui satisfait les contraintes
 solve satisfy;
