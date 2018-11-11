@@ -34,29 +34,35 @@ array[1..nbTeams, 1..nbTeams-1] of var 1..nbTeams: matchs;
 constraint % Chaque equipe joue contre chaque autre 1 seule fois
   forall(i in Teams)(
       alldifferent([matchs[i,j] | j in Games])
-  );
+  ) /\
   
  
-constraint % Une equipe ne joue pas 2 matchs en meme temps
+ % Une equipe ne joue pas 2 matchs en meme temps
   forall(j in Games)(
     alldifferent([matchs[i,j] | i in Teams])
-  );
+  ) /\
   
-constraint % Quand une equipe joue contre une autre, l'autre joue contre elle
+ % Quand une equipe joue contre une autre, l'autre joue contre elle
   forall(i in Teams)(
       forall(j in Games)(
         matchs[matchs[i,j], j] = i
       )
-  );
+  ) /\
   
-constraint % Une equipe ne joue pas contre elle-meme
+ % Une equipe ne joue pas contre elle-meme
   forall(i in Teams)(
       forall(j in Games)(
           matchs[i,j] != i 
       )
-  );
+  ) /\
   
   % Une equipe ne joue pas 4x de suite a l'etranger ou 4x de suite a domicile
+  forall(i in Teams) (
+    forall(j in 1..nbTeams-4)
+    (
+      sum([pv[i,matchs[i,j+k]]  | k in 0..3]) > 0 /\ sum([pv[i,matchs[i,j+k]]  | k in 0..3]) < 4
+    )
+  );
   
 % On veut une reponse qui satisfait les contraintes
 solve satisfy;
