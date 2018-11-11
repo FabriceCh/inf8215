@@ -16,25 +16,25 @@ set of int: Teams = 1..nbTeams;
 % En i,j, on trouve l'equipe contre laquelle l'equipe i joue au jeme match
 array[1..nbTeams, 1..nbTeams-1] of var 1..nbTeams: matchs;
 
-constraint
-  % Chaque equipe joue contre chaque autre 1 seule fois
+constraint % Chaque equipe joue contre chaque autre 1 seule fois
   forall(i in Teams)(
       alldifferent([matchs[i,j] | j in Games])
-  ) /\
+  );
   
-  % Une equipe ne joue pas 2 matchs en meme temps
+ 
+constraint % Une equipe ne joue pas 2 matchs en meme temps
   forall(j in Games)(
     alldifferent([matchs[i,j] | i in Teams])
-  ) /\
+  );
   
-  % Quand une equipe joue contre une autre, l'autre joue contre elle
+constraint % Quand une equipe joue contre une autre, l'autre joue contre elle
   forall(i in Teams)(
       forall(j in Games)(
-        matchs[i,j] == matchs[j,i]
+        matchs[matchs[i,j], j] = i
       )
-  ) /\
+  );
   
-  % Une equipe ne joue pas contre elle-meme
+constraint % Une equipe ne joue pas contre elle-meme
   forall(i in Teams)(
       forall(j in Games)(
           matchs[i,j] != i 
@@ -43,6 +43,6 @@ constraint
   
   % Une equipe ne joue pas 4x de suite a l'etranger ou 4x de suite a domicile
   
-  % On veut une reponse qui satisfait les contraintes
-  solve satisfy;
+% On veut une reponse qui satisfait les contraintes
+solve satisfy;
   
