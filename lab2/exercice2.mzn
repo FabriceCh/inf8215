@@ -21,11 +21,18 @@ int: j;
 constraint
   % Chaque equipe joue contre chaque autre 1 seule fois
   forall(i in 1..nbTeams)(
-    matchs[i][j in 1..nbTeams-1] != matchs[i][j in 1..nbTeams-1]
+      alldifferent(matchs[i][j] | j in nb nbTeams-1);
   );
+  
+  % Une equipe ne joue pas 2 matchs en meme temps
+  forAll(j in 1..nbTeams-1)(
+    alldifferent(matchs[i][j] | i in nbTeams);
+  );
+  
   % Quand une equipe joue contre une autre, l'autre joue contre aussi
   
   % Une equipe ne joue pas contre elle-meme
+  forall(i
   
   % Une equipe ne joue pas 4x de suite a l'etranger ou 4x de suite a domicile
   
