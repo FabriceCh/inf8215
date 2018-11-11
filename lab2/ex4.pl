@@ -1,19 +1,6 @@
 /*
 Akinator - people
-Principe:
-    -Avoir une base de connaissances pouvant définir n'importe quelle entité de façon unique avec des booleans
-    -Lorsque le jeu commence, le programme demande le moins de questions possibles.
-        -Possède une banque d'entités encore possibles (B)
-        -Tant que B contient plus d'une entité: 
-            -Recherche dans B l'attribut qui possède le plus grand ratio de différence 
-                (l'attribut qui une fois déterminé éliminera en moyenne la plus grande quantité d'entités, que ce soit vrai ou faux)
-            -Pose la question en lien avec l'attribut trouvé
-            -Élimine les entités de B qui ne sont plus possibles
-        -La réponse est la seule entité qui reste dans B
 */
-
-
-
 
 %questions
 ask(real, X) :-
@@ -82,50 +69,50 @@ ask(black, X) :-
     Reponse = 'yes'.
 
 %tree
-personne(X) :- ask(real, X), real(X).
-personne(X) :- ask(games, X), games(X).
+personne(X) :- ask(real, X), qreal(X).
+personne(X) :- ask(games, X), qgames(X).
 personne(X) :- true, m(X). %moses
 
-games(X) :- ask(boy, X), boy(X).
-games(X) :- true, lc(X). %lara croft
+qgames(X) :- ask(boy, X), qboy(X).
+qgames(X) :- true, lc(X). %lara croft
 
-boy(X) :- ask(plumber, X), mario(X). %mario
-boy(X) :- jb(X). %james bond
+qboy(X) :- ask(plumber, X), mario(X). %mario
+qboy(X) :- jb(X). %james bond
 
-real(X) :- ask(stillAlive, X), stillAlive(X).
-real(X) :- ask(politician, X), politician(X).
-real(X) :- ask(artist, X), artist(X).
-real(X) :- ask(religion, X), jesus(X). %jesus
-real(X) :- true, as(X). %Ayrton Senna
+qreal(X) :- ask(stillAlive, X), qstillAlive(X).
+qreal(X) :- ask(politician, X), qpolitician(X).
+qreal(X) :- ask(artist, X), qartist(X).
+qreal(X) :- ask(religion, X), jesus(X). %jesus
+qreal(X) :- true, as(X). %Ayrton Senna
 
-politician(X) :- ask(american, X), american(X).
-politician(X) :- ask(boy, X), j(X). %joseph staline
-politician(X) :- c(X). %cleopatre
+qpolitician(X) :- ask(american, X), qamerican(X).
+qpolitician(X) :- ask(boy, X), j(X). %joseph staline
+qpolitician(X) :- c(X). %cleopatre
 
-american(X) :- ask(army_general, X), dd(X). %Dwight D Eisenhower
-american(X) :- rn(X). %Richard Nixon
+qamerican(X) :- ask(army_general, X), dd(X). %Dwight D Eisenhower
+qamerican(X) :- rn(X). %Richard Nixon
 
-artist(X) :- ask(singer, X), mj(X). %micheal jackson
-artist(X) :- victor(X). %victor hugo
+qartist(X) :- ask(singer, X), mj(X). %micheal jackson
+qartist(X) :- victor(X). %victor hugo
 
-stillAlive(X) :- ask(artist, X), arts(X).
-stillAlive(X) :- ask(politician, X), mg(X). %mikhail gorbachev
-stillAlive(X) :- ask(religion, X), pf(X). %pope francis
-stillAlive(X) :- fa(X). %fernando alonso
+qstillAlive(X) :- ask(artist, X), qarts(X).
+qstillAlive(X) :- ask(politician, X), mg(X). %mikhail gorbachev
+qstillAlive(X) :- ask(religion, X), pf(X). %pope francis
+qstillAlive(X) :- fa(X). %fernando alonso
 
-arts(X) :- ask(actor, X), actor(X).
-arts(X) :- ask(boy, X), artist_boy(X).
-arts(X) :- ask(singer, X), lg(X). %lady gaga
-arts(X) :- jk(X). %jk rowling
+qarts(X) :- ask(actor, X), qactor(X).
+qarts(X) :- ask(boy, X), qartist_boy(X).
+qarts(X) :- ask(singer, X), lg(X). %lady gaga
+qarts(X) :- jk(X). %jk rowling
 
-actor(X) :- ask(boy, X), actor_boy(X).
-actor(X) :- jl(X). %jennifer lawrence
+qactor(X) :- ask(boy, X), qactor_boy(X).
+qactor(X) :- jl(X). %jennifer lawrence
 
-actor_boy(X) :- ask(black, X), dw(X). %denzel washington
-actor_boy(X) :- qt(X). % tarantino
+qactor_boy(X) :- ask(black, X), dw(X). %denzel washington
+qactor_boy(X) :- qt(X). % tarantino
 
-artist_boy(X) :- ask(games, X), hk(X). % hideo kojima
-artist_boy(X) :- b(X). % banksy
+qartist_boy(X) :- ask(games, X), hk(X). % hideo kojima
+qartist_boy(X) :- b(X). % banksy
 
 %reals (18)
 real(michael_jackson).

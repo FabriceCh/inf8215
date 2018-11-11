@@ -28,6 +28,48 @@ piano(piano).
 lamp(lamp).
 paper(paper).
 
+wash(vacuum).
+wash(broom).
+wash(shampoo).
+wash(dishwashing_detergent).
+wash(dishwashing_detergent).
+
+pointy_ends(fork).
+pointy_ends(cactus).
+
+move_things(wallet).
+move_things(backpack).
+
+kitchen(range).
+kitchen(oven).
+kitchen(coffee_machine).
+kitchen(toaster).
+kitchen(table).
+kitchen(fork).
+kitchen(plate).
+kitchen(pan).
+kitchen(dishwashing_detergent).
+
+dishes(fork).
+dishes(palte).
+dishes(pan).
+
+electric(vacuum).
+electric(computer).
+electric(phone).
+electric(oven).
+electric(range).
+electric(coffee_machine).
+electric(toaster).
+electric(lamp).
+
+complex_ui(computer).
+complex_ui(phone).
+
+furniture(range).
+furniture(oven).
+furniture(table).
+
 %questions
 ask(electric, X) :-
     format('~w est électrique? (oui./non.)', [X]),
@@ -120,43 +162,43 @@ ask(sleep, X) :-
     Reponse = 'oui'.
 
 %tree
-objet(X) :- ask(electric, X), electric(X).
-objet(X) :- ask(kitchen, X), kitchen(X).
-objet(X) :- ask(move_things, X), move_things(X).
-objet(X) :- ask(pointy_ends, X), pointy_ends(X).
-objet(X) :- ask(wash, X), wash(X).
+objet(X) :- ask(electric, X), qelectric(X).
+objet(X) :- ask(kitchen, X), qkitchen(X).
+objet(X) :- ask(move_things, X), qmove_things(X).
+objet(X) :- ask(pointy_ends, X), qpointy_ends(X).
+objet(X) :- ask(wash, X), qwash(X).
 objet(X) :- ask(intrument, X), piano(X).
 objet(X) :- ask(sleep, X), bed(X).
 objet(X) :- paper(X).
 
-wash(X) :- ask(hair, X), shampoo(X).
-wash(X) :- broom(X).
+qwash(X) :- ask(hair, X), shampoo(X).
+qwash(X) :- broom(X).
 
-pointy_ends(X) :- ask(plant, X), cactus(X).
-pointy_ends(X) :- key(X).
+qpointy_ends(X) :- ask(plant, X), cactus(X).
+qpointy_ends(X) :- key(X).
 
-move_things(X) :- ask(back, X), backpack(X).
-move_things(X) :- wallet(X).
+qmove_things(X) :- ask(back, X), backpack(X).
+qmove_things(X) :- wallet(X).
 
-kitchen(X) :- ask(dishes, X), dishes(X).
-kitchen(X) :- ask(furniture, X), table(X).
-kitchen(X) :- dishwashing_detergent(X).
+qkitchen(X) :- ask(dishes, X), qdishes(X).
+qkitchen(X) :- ask(furniture, X), table(X).
+qkitchen(X) :- dishwashing_detergent(X).
 
-dishes(X) :- ask(pointy_ends, X), fork(X).
-dishes(X) :- ask(eat, X), plate(X).
-dishes(X) :- pan(X).
+qdishes(X) :- ask(pointy_ends, X), fork(X).
+qdishes(X) :- ask(eat, X), plate(X).
+qdishes(X) :- pan(X).
 
-electric(X) :- ask(kitchen, X), kitchen_electric(X).
-electric(X) :- ask(complex_ui, X), complex_ui(X).
-electric(X) :- ask(sucks, X), vacuum(X).
-electric(X) :- lamp(X).
+qelectric(X) :- ask(kitchen, X), qkitchen_electric(X).
+qelectric(X) :- ask(complex_ui, X), qcomplex_ui(X).
+qelectric(X) :- ask(sucks, X), vacuum(X).
+qelectric(X) :- lamp(X).
 
-complex_ui(X) :- ask(computer_access, X), computer(X).
-complex_ui(X) :- phone(X).
+qcomplex_ui(X) :- ask(computer_access, X), computer(X).
+qcomplex_ui(X) :- phone(X).
 
-kitchen_electric(X) :- ask(furniture, X), furniture(X).
-kitchen_electric(X) :- ask(coffee, X), coffee_machine(X).
-kitchen_electric(X) :- toaster(X).
+qkitchen_electric(X) :- ask(furniture, X), qfurniture(X).
+qkitchen_electric(X) :- ask(coffee, X), coffee_machine(X).
+qkitchen_electric(X) :- toaster(X).
 
-furniture(X) :- ask(cooking_plate, X), range(X).
-furniture(X) :- oven(X).
+qfurniture(X) :- ask(cooking_plate, X), range(X).
+qfurniture(X) :- oven(X).
