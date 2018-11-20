@@ -105,7 +105,6 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
             raise RuntimeError("You must train classifer before predicting data!")
 
         X = np.append(X, np.ones(X.shape[1]))
-        self.theta = np.random.rand(self.nb_feature + 1, self.nb_classes)
         logits_matrix = np.dot(X, self.theta)
         probabilities = np.empty(0)
         for row in logits_matrix:
@@ -176,7 +175,29 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def _cost_function(self, probabilities, y):
-        pass
+        hot_y = self._one_hot(y)
+
+        for row in probabilities:
+            for index in row:
+                if index < self.eps or index + self.eps > 1:
+                    raise RuntimeError("Probability not between 0 and 1")
+
+        log_loss = 0
+
+        for idx_row, row in probabilities:
+            for idx, propability in row:
+                if (idx == hot_y[idx_row]):
+                    log_loss += np.log(propability)
+
+        log_loss = (-1 * log_loss) / len(probabilities)
+
+        if self.regularization:
+            # do the things
+
+        for row in probabilities:
+            for index in row:
+                if index < self.eps or index + self.eps > 1:
+            raise RuntimeError("Probability not between 0 and 1")
 
     """
         In :
