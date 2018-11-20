@@ -104,9 +104,16 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         except AttributeError:
             raise RuntimeError("You must train classifer before predicting data!")
 
-        pass
+        X = np.append(X, np.ones(X.shape[1]))
+        self.theta = np.random.rand(self.nb_feature + 1, self.nb_classes)
+        logits_matrix = np.dot(X, self.theta)
+        probabilities = np.empty(0)
+        for row in logits_matrix:
+            probabilities = np.append(probabilities, self._softmax(row))
 
-        """
+        return probabilities
+
+    """
         In: 
         X without bias
 
@@ -121,11 +128,11 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def predict(self, X, y=None):
-        try:
-            getattr(self, "theta_")
-        except AttributeError:
-            raise RuntimeError("You must train classifer before predicting data!")
-        pass
+        probabilities = self.predict_proba(X)
+        predicted_classes = np.empty(0)
+        for row in probabilities:
+            predicted_classes = np.argmax(row)
+        return predicted_classes
 
     def fit_predict(self, X, y=None):
         self.fit(X, y)
@@ -208,9 +215,10 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
     def _softmax(self, z):
         p = np.empty(0)
-        sum_exp = np.sum(np.exp(z))
+        sub_z = z[:-1]
+        sum_exp = np.sum(np.exp(sub_z))
         for logit in z:
-            value = np.exp(logit)/sum_exp
+            value = np.exp(logit) / sum_exp
             p = np.append(p, value)
         return p
 
