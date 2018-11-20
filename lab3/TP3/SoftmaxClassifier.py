@@ -131,7 +131,7 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         probabilities = self.predict_proba(X)
         predicted_classes = np.empty(0)
         for row in probabilities:
-            predicted_classes = np.argmax(row)
+            predicted_classes = np.append(predicted_classes, np.argmax(row))
         return predicted_classes
 
     def fit_predict(self, X, y=None):
