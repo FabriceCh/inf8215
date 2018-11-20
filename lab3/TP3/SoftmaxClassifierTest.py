@@ -6,6 +6,9 @@ def testOneHot():
     classifier = SoftmaxClassifier()
     print(classifier._one_hot(values))
 
+def testSoftMax():
+    values = [2, 3, 4]
+    classifier = SoftmaxClassifier()
+    print(classifier._softmax(values))
 
-
-testOneHot()
+testSoftMax()

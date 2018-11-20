@@ -207,7 +207,12 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def _softmax(self, z):
-        
+        p = np.empty(0)
+        sum_exp = np.sum(np.exp(z))
+        for logit in z:
+            value = np.exp(logit)/sum_exp
+            p = np.append(p, value)
+        return p
 
     """
         In:
