@@ -170,34 +170,28 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         If self.regularization, compute l2 regularization term
         Ensure that probabilities are not equal to either 0. or 1. using self.eps
 
-        Out:
-        Probabilities
+        Out: cost (real number)
     """
 
     def _cost_function(self, probabilities, y):
         hot_y = self._one_hot(y)
 
-        for row in probabilities:
-            for index in row:
-                if index < self.eps or index + self.eps > 1:
-                    raise RuntimeError("Probability not between 0 and 1")
+        probabilities = np.clip(probabilities, self.eps, 1-self.eps)
 
         log_loss = 0
 
         for idx_row, row in probabilities:
-            for idx, propability in row:
-                if (idx == hot_y[idx_row]):
-                    log_loss += np.log(propability)
+            for idx, probability in row:
+                if idx == hot_y[idx_row]:
+                    log_loss += np.log(probability)
 
         log_loss = (-1 * log_loss) / len(probabilities)
 
         if self.regularization:
             # do the things
-
-        for row in probabilities:
-            for index in row:
-                if index < self.eps or index + self.eps > 1:
-            raise RuntimeError("Probability not between 0 and 1")
+        
+        # TODO: S'assurer que c'est pas de la marde
+        probabilities = np.clip(probabilities, self.eps, 1 - self.eps)
 
     """
         In :
@@ -225,7 +219,7 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
     """
         In :
-        Logits: (self.nb_features +1) * self.nb_classes
+        Logits: nb_examples * self.nb_classes 
 
         Do:
         Compute softmax on logits
