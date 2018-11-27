@@ -1,5 +1,6 @@
 from sklearn.base import BaseEstimator, ClassifierMixin
 import numpy as np
+import copy
 
 
 class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
@@ -72,13 +73,12 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
         for epoch in range(self.n_epochs):
 
-            # logits =
             probabilities = self.predict_proba(X, y)
 
-            # loss =
+            loss = self._cost_function(probabilities, y)
             self.theta_ -= self.lr * self._get_gradient(X_bias, y, probabilities)
 
-            # self.losses_.append(loss)
+            self.losses_.append(loss)
 
             if self.early_stopping:
                 pass
@@ -152,7 +152,9 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def score(self, X, y=None):
-        pass
+        probas = self.predict_proba(X)
+        self.regularization = False
+        return self._cost_function(probas, y)
 
     """
         Private methods, their names begin with an underscore
@@ -187,10 +189,8 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
         log_loss = (-1 * log_loss) / len(probabilities)
 
-        ###### question 8
         if self.regularization:
-           log_loss = self.alpha * np.sum(self.theta[:-1])
-
+            log_loss += self.alpha * np.sum(self.theta[:-1] ** 2)
 
         return log_loss
 
@@ -258,5 +258,10 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         hot_y = self._one_hot(y)
 
         grad_J = np.matmul(np.transpose(X), probas - hot_y) / probas.shape[0]
+
+        if (self.regularization):
+            derived_theta = copy.deepcopy(self.theta)
+            derived_theta[-1] = 0
+            grad_J += self.theta
 
         return grad_J
