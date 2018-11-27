@@ -10,11 +10,11 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
         """
             self.lr : the learning rate for weights update during gradient descent
-            self.alpha: the regularization coefficient 
+            self.alpha: the regularization coefficient
             self.n_epochs: the number of iterations
             self.eps: the threshold to keep probabilities in range [self.eps;1.-self.eps]
             self.regularization: Enables the regularization, help to prevent overfitting
-            self.threshold: Used for early stopping, if the difference between losses during 
+            self.threshold: Used for early stopping, if the difference between losses during
                             two consecutive epochs is lower than self.threshold, then we stop the algorithm
             self.early_stopping: enables early stopping to prevent overfitting
         """
@@ -72,11 +72,11 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
         for epoch in range(self.n_epochs):
 
-            # logits = 
-            # probabilities = 
+            # logits =
+            # probabilities =
 
             # loss =
-            # self.theta_ = 
+            self.theta_ -= epoch * self._get_gradient(self.nb_feature + 1, self.nb_classes)
 
             # self.losses_.append(loss)
 
@@ -176,7 +176,7 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     def _cost_function(self, probabilities, y):
         hot_y = self._one_hot(y)
 
-        probabilities = np.clip(probabilities, self.eps, 1-self.eps)
+        probabilities = np.clip(probabilities, self.eps, 1 - self.eps)
 
         log_loss = 0
 
@@ -187,11 +187,15 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
         log_loss = (-1 * log_loss) / len(probabilities)
 
-        if self.regularization:
-            # do the things
-        
-        # TODO: S'assurer que c'est pas de la marde
-        probabilities = np.clip(probabilities, self.eps, 1 - self.eps)
+        ###### question 8
+        # if self.regularization:
+        # log_loss = self.alpha * np.sum(self.theta)
+
+        # if self.regularization:
+        #   J += self.alpha * np.sum(self.theta_[:, 1:])
+        ######
+
+        return log_loss
 
     """
         In :
@@ -254,5 +258,8 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def _get_gradient(self, X, y, probas):
+        hot_y = self._one_hot(y)
 
-        pass
+        grad_J = np.matmul(np.transpose(X), probas - hot_y) / probas.shape[0]
+
+        return grad_J
