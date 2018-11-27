@@ -73,10 +73,10 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         for epoch in range(self.n_epochs):
 
             # logits =
-            # probabilities =
+            probabilities = self.predict_proba(X, y)
 
             # loss =
-            self.theta_ -= epoch * self._get_gradient(self.nb_feature + 1, self.nb_classes)
+            self.theta_ -= self.lr * self._get_gradient(X_bias, y, probabilities)
 
             # self.losses_.append(loss)
 
@@ -188,12 +188,9 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         log_loss = (-1 * log_loss) / len(probabilities)
 
         ###### question 8
-        # if self.regularization:
-        # log_loss = self.alpha * np.sum(self.theta)
+        if self.regularization:
+           log_loss = self.alpha * np.sum(self.theta[:-1])
 
-        # if self.regularization:
-        #   J += self.alpha * np.sum(self.theta_[:, 1:])
-        ######
 
         return log_loss
 
