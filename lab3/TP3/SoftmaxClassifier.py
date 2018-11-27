@@ -68,8 +68,9 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         self.nb_feature = X.shape[1]
         self.nb_classes = len(np.unique(y))
 
-        X_bias = np.append(X, np.ones(self.nb_feature))
-        self.theta = np.random.rand(self.nb_feature + 1, self.nb_classes)
+        X_bias = np.hstack((X, np.ones((X.shape[0], 1))))
+
+        self.theta_ = np.random.rand(self.nb_feature + 1, self.nb_classes)
 
         for epoch in range(self.n_epochs):
 
@@ -104,9 +105,8 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
             getattr(self, "theta_")
         except AttributeError:
             raise RuntimeError("You must train classifer before predicting data!")
-
-        X = np.append(X, np.ones(X.shape[1]))
-        logits_matrix = np.dot(X, self.theta)
+        X_bias = np.hstack((X, np.ones((X.shape[0], 1))))
+        logits_matrix = np.dot(X_bias, self.theta_)
         probabilities = np.empty(0)
         for row in logits_matrix:
             probabilities = np.append(probabilities, self._softmax(row))
@@ -191,7 +191,7 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         log_loss = (-1 * log_loss) / len(probabilities)
 
         if self.regularization:
-            log_loss += self.alpha * np.sum(self.theta[:-1] ** 2)
+            log_loss += self.alpha * np.sum(self.theta_[:-1] ** 2)
 
         return log_loss
 
@@ -261,8 +261,8 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         grad_J = np.matmul(np.transpose(X), probas - hot_y) / probas.shape[0]
 
         if (self.regularization):
-            derived_theta = copy.deepcopy(self.theta)
+            derived_theta = copy.deepcopy(self.theta_)
             derived_theta[-1] = 0
-            grad_J += self.theta
+            grad_J += derived_theta
 
         return grad_J
