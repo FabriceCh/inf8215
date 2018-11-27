@@ -81,7 +81,8 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
             self.losses_.append(loss)
 
             if self.early_stopping:
-                pass
+                if loss < self.threshold:
+                    break
 
         return self
 
