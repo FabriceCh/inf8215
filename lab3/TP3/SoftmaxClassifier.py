@@ -107,9 +107,9 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
             raise RuntimeError("You must train classifer before predicting data!")
         X_bias = np.hstack((X, np.ones((X.shape[0], 1))))
         logits_matrix = np.dot(X_bias, self.theta_)
-        probabilities = np.empty(0)
+        probabilities = np.empty((0, 3), float)
         for row in logits_matrix:
-            probabilities = np.append(probabilities, self._softmax(row))
+            probabilities = np.vstack([probabilities, self._softmax(row)])
 
         return probabilities
 
@@ -211,7 +211,6 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def _one_hot(self, y):
-
         one_hot = np.zeros((len(y), max(y)))
         for i in range(len(y)):
             value = y[i]
