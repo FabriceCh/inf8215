@@ -82,11 +82,11 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
             self.losses_.append(loss)
 
             if self.early_stopping:
-                if prev_loss - loss < self.threshold:
+                if abs(prev_loss - loss) < self.threshold:
                     break
 
             prev_loss = loss
-            
+
         return self
 
     """
@@ -237,8 +237,7 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
     def _softmax(self, z):
         p = np.empty(0)
-        sub_z = z[:-1]
-        sum_exp = np.sum(np.exp(sub_z))
+        sum_exp = np.sum(np.exp(z))
         for logit in z:
             value = np.exp(logit) / sum_exp
             p = np.append(p, value)
