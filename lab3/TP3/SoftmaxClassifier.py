@@ -82,9 +82,11 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
             self.losses_.append(loss)
 
             if self.early_stopping:
-                if loss < self.threshold:
+                if prev_loss - loss < self.threshold:
                     break
 
+            prev_loss = loss
+            
         return self
 
     """
@@ -183,11 +185,15 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
 
         log_loss = 0
 
-        for idx_row, row in probabilities:
-            for idx, probability in row:
-                if idx == hot_y[idx_row]:
+        row_index = 0
+        col_index = 0
+        for row in probabilities:
+            for probability in row:
+                if hot_y[row_index][col_index]:
                     log_loss += np.log(probability)
-
+                col_index += 1
+            col_index = 0
+            row_index += 1
         log_loss = (-1 * log_loss) / len(probabilities)
 
         if self.regularization:
@@ -211,10 +217,10 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def _one_hot(self, y):
-        one_hot = np.zeros((len(y), max(y)))
+        one_hot = np.zeros((len(y), max(y+1)))
         for i in range(len(y)):
             value = y[i]
-            one_hot[i][value - 1] = 1
+            one_hot[i][value] = 1
 
         return one_hot
 
