@@ -197,7 +197,7 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         log_loss = (-1 * log_loss) / len(probabilities)
 
         if self.regularization:
-            log_loss += self.alpha * np.sum(self.theta_[:-1] ** 2)
+            log_loss += self.alpha * np.sum(self.theta_[:-1] ** 2) / len(probabilities)
 
         return log_loss
 
@@ -267,6 +267,6 @@ class SoftmaxClassifier(BaseEstimator, ClassifierMixin):
         if (self.regularization):
             derived_theta = copy.deepcopy(self.theta_)
             derived_theta[-1] = 0
-            grad_J += derived_theta
+            grad_J += self.alpha / len(X) * derived_theta
 
         return grad_J
